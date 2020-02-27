@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -29,6 +31,8 @@ import org.springframework.util.CollectionUtils;
  */
 @Service
 public class ShopeeCatStatServiceImpl implements ShopeeCatStatService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ShopeeCatStatServiceImpl.class);
 
     @Autowired
     private ShopeeCatService shopeeCatService;
@@ -114,12 +118,14 @@ public class ShopeeCatStatServiceImpl implements ShopeeCatStatService {
                             List<ItemsBean> itemsBeans2 = itemsBeans1.subList(0, size2 - 5);
                             thridTotalItems.addAll(itemsBeans2);
                         }
+                        //每5S请求一次,不然会判断为刷接口恶意请求
                         Thread.sleep(5000);
                     } catch (Exception e) {
-                        System.out.println("请求失败:" + catThird.getCatId() + "[" + i + "]");
+                        logger.info("请求失败:{},[第{}页]" ,catThird.getCatId(),i+1);
                         e.printStackTrace();
                     }
                 }
+
                 //统计当前三级类目的销量汇总信息
                 IntSummaryStatistics collect = thridTotalItems.stream().collect(Collectors.summarizingInt(value -> value.getSold()));
 
@@ -142,6 +148,7 @@ public class ShopeeCatStatServiceImpl implements ShopeeCatStatService {
                 //计算竞争比重:首页平均销量 / 此分类产品总数
                 statThird.setCatCompeteWeight(divide(homeAvgSoldThird,statThird.getTotalProCount().doubleValue()));
                 catStatThridList.add(statThird);
+                logger.info("=======完成三级类目统计:{}",catThird.getCatId());
             }
 
             //产品总数
