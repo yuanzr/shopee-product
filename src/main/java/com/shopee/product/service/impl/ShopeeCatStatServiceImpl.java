@@ -1,6 +1,7 @@
 package com.shopee.product.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.shopee.product.mapper.ShopeeCatStatMapper;
 import com.shopee.product.mapper.ShopeeCatStatMapperExpand;
 import com.shopee.product.model.ShopeeCat;
 import com.shopee.product.model.ShopeeCatStat;
@@ -36,6 +37,9 @@ public class ShopeeCatStatServiceImpl implements ShopeeCatStatService {
 
     @Autowired
     private ShopeeCatService shopeeCatService;
+
+    @Autowired
+    private ShopeeCatStatMapper shopeeCatStatMapper;
 
     @Autowired
     private ShopeeCatStatMapperExpand shopeeCatStatMapperExpand;
@@ -150,6 +154,9 @@ public class ShopeeCatStatServiceImpl implements ShopeeCatStatService {
                 statThird.setCatCompeteWeight(divide(homeAvgSoldThird,statThird.getTotalProCount().doubleValue()));
                 catStatThridList.add(statThird);
                 logger.info("=======完成三级类目统计:{}",catThird.getCatId());
+                statThird.setVersion(version+2);
+                shopeeCatStatMapper.insert(statThird);
+                statThird.setVersion(version);
             }
 
             //产品总数
@@ -164,6 +171,7 @@ public class ShopeeCatStatServiceImpl implements ShopeeCatStatService {
             statSecond.setCatCompeteWeight(divide(homeAvgSoldSecond,totalProCountSecond.doubleValue()));
             statSecond.setSubList(catStatThridList);
             catStatSecondList.add(statSecond);
+
             logger.info("=======完成Second级类目ID:{}",statSecond.getCatId());
         }
 
@@ -179,7 +187,8 @@ public class ShopeeCatStatServiceImpl implements ShopeeCatStatService {
         for (ShopeeCatStat catStatSecond : catStatFrist.getSubList()){
             catStatTotalList.addAll(catStatSecond.getSubList());
         }
-        shopeeCatStatMapperExpand.insertList(catStatTotalList);
+//        logger.info("=======开始插入数据",statSecond.getCatId());
+//        shopeeCatStatMapperExpand.insertList(catStatTotalList);
     }
 
 
