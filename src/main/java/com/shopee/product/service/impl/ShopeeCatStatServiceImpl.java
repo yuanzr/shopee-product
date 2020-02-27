@@ -118,8 +118,9 @@ public class ShopeeCatStatServiceImpl implements ShopeeCatStatService {
                             List<ItemsBean> itemsBeans2 = itemsBeans1.subList(0, size2 - 5);
                             thridTotalItems.addAll(itemsBeans2);
                         }
+                        logger.info("=======完成三级类目ID:{}[第{}页]",catThird.getCatId(),i+1);
                         //每5S请求一次,不然会判断为刷接口恶意请求
-                        Thread.sleep(5000);
+                        Thread.sleep(10000);
                     } catch (Exception e) {
                         logger.info("请求失败:{},[第{}页]" ,catThird.getCatId(),i+1);
                         e.printStackTrace();
@@ -163,6 +164,7 @@ public class ShopeeCatStatServiceImpl implements ShopeeCatStatService {
             statSecond.setCatCompeteWeight(divide(homeAvgSoldSecond,totalProCountSecond.doubleValue()));
             statSecond.setSubList(catStatThridList);
             catStatSecondList.add(statSecond);
+            logger.info("=======完成Second级类目ID:{}",statSecond.getCatId());
         }
 
         catStatFrist.setTotalProCount(totalProCountFrist.intValue());
