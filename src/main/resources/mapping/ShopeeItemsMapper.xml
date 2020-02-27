@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shopee.product.mapper.ShopeeItemsMapper" >
+  <resultMap id="BaseResultMap" type="com.shopee.product.model.ShopeeItems" >
+    <id column="record_id" property="recordId" jdbcType="BIGINT" />
+    <result column="item_id" property="itemId" jdbcType="BIGINT" />
+    <result column="cat_id" property="catId" jdbcType="BIGINT" />
+    <result column="shop_id" property="shopId" jdbcType="BIGINT" />
+    <result column="shop_location" property="shopLocation" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="price_min" property="priceMin" jdbcType="DECIMAL" />
+    <result column="price_max" property="priceMax" jdbcType="DECIMAL" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="price_before_discount" property="priceBeforeDiscount" jdbcType="DECIMAL" />
+    <result column="price_min_before_discount" property="priceMinBeforeDiscount" jdbcType="DECIMAL" />
+    <result column="price_max_before_discount" property="priceMaxBeforeDiscount" jdbcType="DECIMAL" />
+    <result column="wholesale_tier_list" property="wholesaleTierList" jdbcType="VARCHAR" />
+    <result column="discount" property="discount" jdbcType="INTEGER" />
+    <result column="liked_count" property="likedCount" jdbcType="INTEGER" />
+    <result column="sold" property="sold" jdbcType="INTEGER" />
+    <result column="historical_sold" property="historicalSold" jdbcType="INTEGER" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="item_rating_star" property="itemRatingStar" jdbcType="DOUBLE" />
+    <result column="currency" property="currency" jdbcType="VARCHAR" />
+    <result column="item_detail_url" property="itemDetailUrl" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="upload_time" property="uploadTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    record_id, item_id, cat_id, shop_id, shop_location, name, image, image_url, price_min, 
+    price_max, price, price_before_discount, price_min_before_discount, price_max_before_discount, 
+    wholesale_tier_list, discount, liked_count, sold, historical_sold, stock, brand, 
+    item_rating_star, currency, item_detail_url, version, upload_time, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.shopee.product.model.ShopeeItemsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from shopee_items
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from shopee_items
+    where record_id = #{recordId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from shopee_items
+    where record_id = #{recordId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shopee.product.model.ShopeeItemsExample" >
+    delete from shopee_items
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shopee.product.model.ShopeeItems" useGeneratedKeys="true" keyProperty="recordId" >
+    insert into shopee_items (item_id, cat_id, shop_id, 
+      shop_location, name, image, 
+      image_url, price_min, price_max, 
+      price, price_before_discount, price_min_before_discount, 
+      price_max_before_discount, wholesale_tier_list, 
+      discount, liked_count, sold, 
+      historical_sold, stock, brand, 
+      item_rating_star, currency, item_detail_url, 
+      version, upload_time, create_time, 
+      update_time)
+    values (#{itemId,jdbcType=BIGINT}, #{catId,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, 
+      #{shopLocation,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
+      #{imageUrl,jdbcType=VARCHAR}, #{priceMin,jdbcType=DECIMAL}, #{priceMax,jdbcType=DECIMAL}, 
+      #{price,jdbcType=DECIMAL}, #{priceBeforeDiscount,jdbcType=DECIMAL}, #{priceMinBeforeDiscount,jdbcType=DECIMAL}, 
+      #{priceMaxBeforeDiscount,jdbcType=DECIMAL}, #{wholesaleTierList,jdbcType=VARCHAR}, 
+      #{discount,jdbcType=INTEGER}, #{likedCount,jdbcType=INTEGER}, #{sold,jdbcType=INTEGER}, 
+      #{historicalSold,jdbcType=INTEGER}, #{stock,jdbcType=INTEGER}, #{brand,jdbcType=VARCHAR}, 
+      #{itemRatingStar,jdbcType=DOUBLE}, #{currency,jdbcType=VARCHAR}, #{itemDetailUrl,jdbcType=VARCHAR}, 
+      #{version,jdbcType=INTEGER}, #{uploadTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shopee.product.model.ShopeeItems" useGeneratedKeys="true" keyProperty="recordId" >
+    insert into shopee_items
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        item_id,
+      </if>
+      <if test="catId != null" >
+        cat_id,
+      </if>
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="shopLocation != null" >
+        shop_location,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+      <if test="imageUrl != null" >
+        image_url,
+      </if>
+      <if test="priceMin != null" >
+        price_min,
+      </if>
+      <if test="priceMax != null" >
+        price_max,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="priceBeforeDiscount != null" >
+        price_before_discount,
+      </if>
+      <if test="priceMinBeforeDiscount != null" >
+        price_min_before_discount,
+      </if>
+      <if test="priceMaxBeforeDiscount != null" >
+        price_max_before_discount,
+      </if>
+      <if test="wholesaleTierList != null" >
+        wholesale_tier_list,
+      </if>
+      <if test="discount != null" >
+        discount,
+      </if>
+      <if test="likedCount != null" >
+        liked_count,
+      </if>
+      <if test="sold != null" >
+        sold,
+      </if>
+      <if test="historicalSold != null" >
+        historical_sold,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="brand != null" >
+        brand,
+      </if>
+      <if test="itemRatingStar != null" >
+        item_rating_star,
+      </if>
+      <if test="currency != null" >
+        currency,
+      </if>
+      <if test="itemDetailUrl != null" >
+        item_detail_url,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="uploadTime != null" >
+        upload_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemId != null" >
+        #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test="catId != null" >
+        #{catId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="shopLocation != null" >
+        #{shopLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null" >
+        #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="priceMin != null" >
+        #{priceMin,jdbcType=DECIMAL},
+      </if>
+      <if test="priceMax != null" >
+        #{priceMax,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="priceBeforeDiscount != null" >
+        #{priceBeforeDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="priceMinBeforeDiscount != null" >
+        #{priceMinBeforeDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="priceMaxBeforeDiscount != null" >
+        #{priceMaxBeforeDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="wholesaleTierList != null" >
+        #{wholesaleTierList,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null" >
+        #{discount,jdbcType=INTEGER},
+      </if>
+      <if test="likedCount != null" >
+        #{likedCount,jdbcType=INTEGER},
+      </if>
+      <if test="sold != null" >
+        #{sold,jdbcType=INTEGER},
+      </if>
+      <if test="historicalSold != null" >
+        #{historicalSold,jdbcType=INTEGER},
+      </if>
+      <if test="stock != null" >
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="itemRatingStar != null" >
+        #{itemRatingStar,jdbcType=DOUBLE},
+      </if>
+      <if test="currency != null" >
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="itemDetailUrl != null" >
+        #{itemDetailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="uploadTime != null" >
+        #{uploadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shopee.product.model.ShopeeItemsExample" resultType="java.lang.Integer" >
+    select count(*) from shopee_items
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update shopee_items
+    <set >
+      <if test="record.recordId != null" >
+        record_id = #{record.recordId,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemId != null" >
+        item_id = #{record.itemId,jdbcType=BIGINT},
+      </if>
+      <if test="record.catId != null" >
+        cat_id = #{record.catId,jdbcType=BIGINT},
+      </if>
+      <if test="record.shopId != null" >
+        shop_id = #{record.shopId,jdbcType=BIGINT},
+      </if>
+      <if test="record.shopLocation != null" >
+        shop_location = #{record.shopLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.image != null" >
+        image = #{record.image,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imageUrl != null" >
+        image_url = #{record.imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priceMin != null" >
+        price_min = #{record.priceMin,jdbcType=DECIMAL},
+      </if>
+      <if test="record.priceMax != null" >
+        price_max = #{record.priceMax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.priceBeforeDiscount != null" >
+        price_before_discount = #{record.priceBeforeDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.priceMinBeforeDiscount != null" >
+        price_min_before_discount = #{record.priceMinBeforeDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.priceMaxBeforeDiscount != null" >
+        price_max_before_discount = #{record.priceMaxBeforeDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.wholesaleTierList != null" >
+        wholesale_tier_list = #{record.wholesaleTierList,jdbcType=VARCHAR},
+      </if>
+      <if test="record.discount != null" >
+        discount = #{record.discount,jdbcType=INTEGER},
+      </if>
+      <if test="record.likedCount != null" >
+        liked_count = #{record.likedCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.sold != null" >
+        sold = #{record.sold,jdbcType=INTEGER},
+      </if>
+      <if test="record.historicalSold != null" >
+        historical_sold = #{record.historicalSold,jdbcType=INTEGER},
+      </if>
+      <if test="record.stock != null" >
+        stock = #{record.stock,jdbcType=INTEGER},
+      </if>
+      <if test="record.brand != null" >
+        brand = #{record.brand,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemRatingStar != null" >
+        item_rating_star = #{record.itemRatingStar,jdbcType=DOUBLE},
+      </if>
+      <if test="record.currency != null" >
+        currency = #{record.currency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemDetailUrl != null" >
+        item_detail_url = #{record.itemDetailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.version != null" >
+        version = #{record.version,jdbcType=INTEGER},
+      </if>
+      <if test="record.uploadTime != null" >
+        upload_time = #{record.uploadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update shopee_items
+    set record_id = #{record.recordId,jdbcType=BIGINT},
+      item_id = #{record.itemId,jdbcType=BIGINT},
+      cat_id = #{record.catId,jdbcType=BIGINT},
+      shop_id = #{record.shopId,jdbcType=BIGINT},
+      shop_location = #{record.shopLocation,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      image = #{record.image,jdbcType=VARCHAR},
+      image_url = #{record.imageUrl,jdbcType=VARCHAR},
+      price_min = #{record.priceMin,jdbcType=DECIMAL},
+      price_max = #{record.priceMax,jdbcType=DECIMAL},
+      price = #{record.price,jdbcType=DECIMAL},
+      price_before_discount = #{record.priceBeforeDiscount,jdbcType=DECIMAL},
+      price_min_before_discount = #{record.priceMinBeforeDiscount,jdbcType=DECIMAL},
+      price_max_before_discount = #{record.priceMaxBeforeDiscount,jdbcType=DECIMAL},
+      wholesale_tier_list = #{record.wholesaleTierList,jdbcType=VARCHAR},
+      discount = #{record.discount,jdbcType=INTEGER},
+      liked_count = #{record.likedCount,jdbcType=INTEGER},
+      sold = #{record.sold,jdbcType=INTEGER},
+      historical_sold = #{record.historicalSold,jdbcType=INTEGER},
+      stock = #{record.stock,jdbcType=INTEGER},
+      brand = #{record.brand,jdbcType=VARCHAR},
+      item_rating_star = #{record.itemRatingStar,jdbcType=DOUBLE},
+      currency = #{record.currency,jdbcType=VARCHAR},
+      item_detail_url = #{record.itemDetailUrl,jdbcType=VARCHAR},
+      version = #{record.version,jdbcType=INTEGER},
+      upload_time = #{record.uploadTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shopee.product.model.ShopeeItems" >
+    update shopee_items
+    <set >
+      <if test="itemId != null" >
+        item_id = #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test="catId != null" >
+        cat_id = #{catId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null" >
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="shopLocation != null" >
+        shop_location = #{shopLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null" >
+        image_url = #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="priceMin != null" >
+        price_min = #{priceMin,jdbcType=DECIMAL},
+      </if>
+      <if test="priceMax != null" >
+        price_max = #{priceMax,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="priceBeforeDiscount != null" >
+        price_before_discount = #{priceBeforeDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="priceMinBeforeDiscount != null" >
+        price_min_before_discount = #{priceMinBeforeDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="priceMaxBeforeDiscount != null" >
+        price_max_before_discount = #{priceMaxBeforeDiscount,jdbcType=DECIMAL},
+      </if>
+      <if test="wholesaleTierList != null" >
+        wholesale_tier_list = #{wholesaleTierList,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null" >
+        discount = #{discount,jdbcType=INTEGER},
+      </if>
+      <if test="likedCount != null" >
+        liked_count = #{likedCount,jdbcType=INTEGER},
+      </if>
+      <if test="sold != null" >
+        sold = #{sold,jdbcType=INTEGER},
+      </if>
+      <if test="historicalSold != null" >
+        historical_sold = #{historicalSold,jdbcType=INTEGER},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="itemRatingStar != null" >
+        item_rating_star = #{itemRatingStar,jdbcType=DOUBLE},
+      </if>
+      <if test="currency != null" >
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="itemDetailUrl != null" >
+        item_detail_url = #{itemDetailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="uploadTime != null" >
+        upload_time = #{uploadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where record_id = #{recordId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shopee.product.model.ShopeeItems" >
+    update shopee_items
+    set item_id = #{itemId,jdbcType=BIGINT},
+      cat_id = #{catId,jdbcType=BIGINT},
+      shop_id = #{shopId,jdbcType=BIGINT},
+      shop_location = #{shopLocation,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      image_url = #{imageUrl,jdbcType=VARCHAR},
+      price_min = #{priceMin,jdbcType=DECIMAL},
+      price_max = #{priceMax,jdbcType=DECIMAL},
+      price = #{price,jdbcType=DECIMAL},
+      price_before_discount = #{priceBeforeDiscount,jdbcType=DECIMAL},
+      price_min_before_discount = #{priceMinBeforeDiscount,jdbcType=DECIMAL},
+      price_max_before_discount = #{priceMaxBeforeDiscount,jdbcType=DECIMAL},
+      wholesale_tier_list = #{wholesaleTierList,jdbcType=VARCHAR},
+      discount = #{discount,jdbcType=INTEGER},
+      liked_count = #{likedCount,jdbcType=INTEGER},
+      sold = #{sold,jdbcType=INTEGER},
+      historical_sold = #{historicalSold,jdbcType=INTEGER},
+      stock = #{stock,jdbcType=INTEGER},
+      brand = #{brand,jdbcType=VARCHAR},
+      item_rating_star = #{itemRatingStar,jdbcType=DOUBLE},
+      currency = #{currency,jdbcType=VARCHAR},
+      item_detail_url = #{itemDetailUrl,jdbcType=VARCHAR},
+      version = #{version,jdbcType=INTEGER},
+      upload_time = #{uploadTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where record_id = #{recordId,jdbcType=BIGINT}
+  </update>
+</mapper>

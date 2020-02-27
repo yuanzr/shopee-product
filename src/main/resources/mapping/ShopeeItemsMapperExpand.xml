@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shopee.product.mapper.ShopeeItemsMapperExpand">
+    <!--批量插入List-->
+    <insert id="insertList" parameterType="java.util.List">
+    insert into shopee_items (item_id, cat_id, shop_id,
+          shop_location, name, image,
+          image_url, price_min, price_max,
+          price, price_before_discount, price_min_before_discount,
+          price_max_before_discount, wholesale_tier_list,
+          discount, liked_count, sold,
+          historical_sold, stock, brand,
+          item_rating_star, currency, item_detail_url,
+          version, upload_time, create_time,
+          update_time)
+    values
+        <foreach collection="list" item="item" separator=",">
+        (#{item.itemId,jdbcType=BIGINT}, #{item.catId,jdbcType=BIGINT}, #{item.shopId,jdbcType=BIGINT},
+          #{item.shopLocation,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR}, #{item.image,jdbcType=VARCHAR},
+          #{item.imageUrl,jdbcType=VARCHAR}, #{item.priceMin,jdbcType=DECIMAL}, #{item.priceMax,jdbcType=DECIMAL},
+          #{item.price,jdbcType=DECIMAL}, #{item.priceBeforeDiscount,jdbcType=DECIMAL}, #{item.priceMinBeforeDiscount,jdbcType=DECIMAL},
+          #{item.priceMaxBeforeDiscount,jdbcType=DECIMAL}, #{item.wholesaleTierList,jdbcType=VARCHAR},
+          #{item.discount,jdbcType=INTEGER}, #{item.likedCount,jdbcType=INTEGER}, #{item.sold,jdbcType=INTEGER},
+          #{item.historicalSold,jdbcType=INTEGER}, #{item.stock,jdbcType=INTEGER}, #{item.brand,jdbcType=VARCHAR},
+          #{item.itemRatingStar,jdbcType=DOUBLE}, #{item.currency,jdbcType=VARCHAR}, #{item.itemDetailUrl,jdbcType=VARCHAR},
+          #{item.version,jdbcType=INTEGER}, #{item.uploadTime,jdbcType=TIMESTAMP}, #{item.createTime,jdbcType=TIMESTAMP},
+          #{item.updateTime,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shopee.product.mapper.ShopeeCatStatMapperExpand">
+    <!--批量插入List-->
+    <insert id="insertList" parameterType="java.util.List">
+     insert into shopee_cat_stat (parent_category_id, cat_id, total_pro_count,
+        total_sold_sum, cat_compete_weight, version)
+     values
+        <foreach collection="list" item="item" separator=",">
+         (#{parentCategoryId,jdbcType=BIGINT}, #{catId,jdbcType=BIGINT}, #{totalProCount,jdbcType=INTEGER},
+          #{totalSoldSum,jdbcType=INTEGER}, #{catCompeteWeight,jdbcType=DOUBLE}, #{version,jdbcType=BIGINT}
+          )
+        </foreach>
+    </insert>
+</mapper>
