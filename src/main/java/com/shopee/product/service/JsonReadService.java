@@ -3,6 +3,7 @@ package com.shopee.product.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.shopee.product.param.ShopeeCatParam;
+import java.net.URL;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -25,13 +26,12 @@ public class JsonReadService {
      * @param fileName
      * @return
      */
-    public String getDatafromFile(String fileName) {
-
-        String Path="E:\\workplace\\shopee-product\\src\\main\\resources\\json\\" + fileName+ ".json";
+    public static String getDatafromFile(String fileName) {
+        URL url = ClassLoader.getSystemResource("json/" + fileName + ".json");
         BufferedReader reader = null;
         String laststr = "";
         try {
-            FileInputStream fileInputStream = new FileInputStream(Path);
+            FileInputStream fileInputStream = new FileInputStream(url.getPath());
             InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
             reader = new BufferedReader(inputStreamReader);
             String tempString = null;
@@ -57,7 +57,7 @@ public class JsonReadService {
 //    <!--产品详情连接-->
 //    https://shopee.co.th/产品title-i.shopid.itemid
     public static void main(String[] args) {
-
+        getDatafromFile("shopee-items-sales-1");
     }
 
 }

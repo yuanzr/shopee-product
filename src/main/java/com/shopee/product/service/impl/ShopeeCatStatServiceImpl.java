@@ -7,6 +7,7 @@ import com.shopee.product.model.ShopeeCat;
 import com.shopee.product.model.ShopeeCatStat;
 import com.shopee.product.param.ShopeeItemsParam;
 import com.shopee.product.param.ShopeeItemsParam.ItemsBean;
+import com.shopee.product.service.JsonReadService;
 import com.shopee.product.service.ShopeeCatService;
 import com.shopee.product.service.ShopeeCatStatService;
 import com.shopee.product.utils.HttpShopeeUtils;
@@ -43,6 +44,8 @@ public class ShopeeCatStatServiceImpl implements ShopeeCatStatService {
 
     @Autowired
     private ShopeeCatStatMapperExpand shopeeCatStatMapperExpand;
+    @Autowired
+    private JsonReadService jsonReadService;
 
 
     @Override
@@ -189,6 +192,38 @@ public class ShopeeCatStatServiceImpl implements ShopeeCatStatService {
         }
 //        logger.info("=======开始插入数据",statSecond.getCatId());
 //        shopeeCatStatMapperExpand.insertList(catStatTotalList);
+    }
+
+
+    @Override
+    public void importJsonData(Long parentId,Long catIds){
+        List<ShopeeItemsParam.ItemsBean> thridTotalItems = new ArrayList<>();
+        Date date = new Date();
+        String strDateFormat = "yyyyMMdd";
+        SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
+        Long version = Long.parseLong(sdf.format(date));
+
+
+        ShopeeCatStat statCat = new ShopeeCatStat();
+        statCat.setParentCategoryId(parentId);
+        statCat.setCatId(catIds);
+        statCat.setVersion(version);
+        for (int i = 1; i < 6 ; i++) {
+            String jsonText = jsonReadService.getDatafromFile("shopee-items-sales-" + i);
+            ShopeeItemsParam shopeeCatParam = JSONObject.parseObject(jsonText, ShopeeItemsParam.class);
+            statCat.setTotalProCount(shopeeCatParam.getTotal_count());
+            List<ShopeeItemsParam.ItemsBean> items = shopeeCatParam.getItems();
+            thridTotalItems.addAll(items);
+        }
+        //统计当前三级类目的销量汇总信息
+        IntSummaryStatistics collect = thridTotalItems.stream().collect(Collectors.summarizingInt(value -> value.getSold()));
+        //计算首页平均销量:销量总和/产品总数量
+        Double homeAvgSoldThird = collect.getAverage();
+        statCat.setTotalSoldSum(homeAvgSoldThird.intValue());
+        //计算竞争比重:首页平均销量 / 此分类产品总数
+        statCat.setCatCompeteWeight(divide(homeAvgSoldThird,statCat.getTotalProCount().doubleValue()));
+        shopeeCatStatMapper.insert(statCat);
+
     }
 
 
