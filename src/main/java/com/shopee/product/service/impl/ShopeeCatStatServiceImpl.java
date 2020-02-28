@@ -44,9 +44,6 @@ public class ShopeeCatStatServiceImpl implements ShopeeCatStatService {
 
     @Autowired
     private ShopeeCatStatMapperExpand shopeeCatStatMapperExpand;
-    @Autowired
-    private JsonReadService jsonReadService;
-
 
     @Override
     public void genCatStatData(Long catId) {
@@ -209,7 +206,7 @@ public class ShopeeCatStatServiceImpl implements ShopeeCatStatService {
         statCat.setCatId(catIds);
         statCat.setVersion(version);
         for (int i = 1; i < 6 ; i++) {
-            String jsonText = jsonReadService.getDatafromFile("shopee-items-sales-" + i);
+            String jsonText = JsonReadService.getDatafromFile("shopee-items-sales-" + i);
             ShopeeItemsParam shopeeCatParam = JSONObject.parseObject(jsonText, ShopeeItemsParam.class);
             statCat.setTotalProCount(shopeeCatParam.getTotal_count());
             List<ShopeeItemsParam.ItemsBean> items = shopeeCatParam.getItems();
