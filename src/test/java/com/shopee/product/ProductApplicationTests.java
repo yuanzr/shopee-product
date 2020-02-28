@@ -43,4 +43,12 @@ class ProductApplicationTests {
         shopeeCatStatService.genCatStatData(2083L);
     }
 
+
+
+
+    @Test
+    void importJsonData() {
+        shopeeCatStatService.importJsonData(17095L,17129L);
+    }
+
 }
