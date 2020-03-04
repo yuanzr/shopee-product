@@ -7,10 +7,12 @@
     <result column="parent_category_id" property="parentCategoryId" jdbcType="BIGINT" />
     <result column="display_name" property="displayName" jdbcType="VARCHAR" />
     <result column="en_name" property="enName" jdbcType="VARCHAR" />
+    <result column="zh_name" property="zhName" jdbcType="VARCHAR" />
     <result column="cat_url" property="catUrl" jdbcType="VARCHAR" />
     <result column="sort_weight" property="sortWeight" jdbcType="DOUBLE" />
     <result column="img_name" property="imgName" jdbcType="VARCHAR" />
     <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="region_no" property="regionNo" jdbcType="INTEGER" />
     <result column="version" property="version" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -74,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    record_id, cat_id, parent_category_id, display_name, en_name, cat_url, sort_weight, 
-    img_name, img_url, version, create_time, update_time
+    record_id, cat_id, parent_category_id, display_name, en_name, zh_name, cat_url, sort_weight, 
+    img_name, img_url, region_no, version, create_time, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.shopee.product.model.ShopeeCatExample" >
     select
@@ -110,13 +112,15 @@
   </delete>
   <insert id="insert" parameterType="com.shopee.product.model.ShopeeCat" useGeneratedKeys="true" keyProperty="recordId" >
     insert into shopee_cat (cat_id, parent_category_id, display_name, 
-      en_name, cat_url, sort_weight, 
-      img_name, img_url, version, 
-      create_time, update_time)
+      en_name, zh_name, cat_url, 
+      sort_weight, img_name, img_url, 
+      region_no, version, create_time, 
+      update_time)
     values (#{catId,jdbcType=BIGINT}, #{parentCategoryId,jdbcType=BIGINT}, #{displayName,jdbcType=VARCHAR}, 
-      #{enName,jdbcType=VARCHAR}, #{catUrl,jdbcType=VARCHAR}, #{sortWeight,jdbcType=DOUBLE}, 
-      #{imgName,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{enName,jdbcType=VARCHAR}, #{zhName,jdbcType=VARCHAR}, #{catUrl,jdbcType=VARCHAR}, 
+      #{sortWeight,jdbcType=DOUBLE}, #{imgName,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, 
+      #{regionNo,jdbcType=INTEGER}, #{version,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.shopee.product.model.ShopeeCat" useGeneratedKeys="true" keyProperty="recordId" >
     insert into shopee_cat
@@ -133,6 +137,9 @@
       <if test="enName != null" >
         en_name,
       </if>
+      <if test="zhName != null" >
+        zh_name,
+      </if>
       <if test="catUrl != null" >
         cat_url,
       </if>
@@ -144,6 +151,9 @@
       </if>
       <if test="imgUrl != null" >
         img_url,
+      </if>
+      <if test="regionNo != null" >
+        region_no,
       </if>
       <if test="version != null" >
         version,
@@ -168,6 +178,9 @@
       <if test="enName != null" >
         #{enName,jdbcType=VARCHAR},
       </if>
+      <if test="zhName != null" >
+        #{zhName,jdbcType=VARCHAR},
+      </if>
       <if test="catUrl != null" >
         #{catUrl,jdbcType=VARCHAR},
       </if>
@@ -179,6 +192,9 @@
       </if>
       <if test="imgUrl != null" >
         #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="regionNo != null" >
+        #{regionNo,jdbcType=INTEGER},
       </if>
       <if test="version != null" >
         #{version,jdbcType=VARCHAR},
@@ -215,6 +231,9 @@
       <if test="record.enName != null" >
         en_name = #{record.enName,jdbcType=VARCHAR},
       </if>
+      <if test="record.zhName != null" >
+        zh_name = #{record.zhName,jdbcType=VARCHAR},
+      </if>
       <if test="record.catUrl != null" >
         cat_url = #{record.catUrl,jdbcType=VARCHAR},
       </if>
@@ -226,6 +245,9 @@
       </if>
       <if test="record.imgUrl != null" >
         img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionNo != null" >
+        region_no = #{record.regionNo,jdbcType=INTEGER},
       </if>
       <if test="record.version != null" >
         version = #{record.version,jdbcType=VARCHAR},
@@ -248,10 +270,12 @@
       parent_category_id = #{record.parentCategoryId,jdbcType=BIGINT},
       display_name = #{record.displayName,jdbcType=VARCHAR},
       en_name = #{record.enName,jdbcType=VARCHAR},
+      zh_name = #{record.zhName,jdbcType=VARCHAR},
       cat_url = #{record.catUrl,jdbcType=VARCHAR},
       sort_weight = #{record.sortWeight,jdbcType=DOUBLE},
       img_name = #{record.imgName,jdbcType=VARCHAR},
       img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      region_no = #{record.regionNo,jdbcType=INTEGER},
       version = #{record.version,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
@@ -274,6 +298,9 @@
       <if test="enName != null" >
         en_name = #{enName,jdbcType=VARCHAR},
       </if>
+      <if test="zhName != null" >
+        zh_name = #{zhName,jdbcType=VARCHAR},
+      </if>
       <if test="catUrl != null" >
         cat_url = #{catUrl,jdbcType=VARCHAR},
       </if>
@@ -285,6 +312,9 @@
       </if>
       <if test="imgUrl != null" >
         img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="regionNo != null" >
+        region_no = #{regionNo,jdbcType=INTEGER},
       </if>
       <if test="version != null" >
         version = #{version,jdbcType=VARCHAR},
@@ -304,28 +334,15 @@
       parent_category_id = #{parentCategoryId,jdbcType=BIGINT},
       display_name = #{displayName,jdbcType=VARCHAR},
       en_name = #{enName,jdbcType=VARCHAR},
+      zh_name = #{zhName,jdbcType=VARCHAR},
       cat_url = #{catUrl,jdbcType=VARCHAR},
       sort_weight = #{sortWeight,jdbcType=DOUBLE},
       img_name = #{imgName,jdbcType=VARCHAR},
       img_url = #{imgUrl,jdbcType=VARCHAR},
+      region_no = #{regionNo,jdbcType=INTEGER},
       version = #{version,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where record_id = #{recordId,jdbcType=BIGINT}
   </update>
-
-  <!--批量插入List-->
-  <insert id="insertList"  parameterType="java.util.List" >
-    insert into shopee_cat (cat_id, parent_category_id, display_name,
-    en_name, cat_url, sort_weight,
-    img_name, img_url, version,
-    create_time, update_time)
-    values
-    <foreach collection="list" item="item" index="index" separator=",">
-      (#{item.catId,jdbcType=BIGINT}, #{item.parentCategoryId,jdbcType=BIGINT}, #{item.displayName,jdbcType=VARCHAR},
-      #{item.enName,jdbcType=VARCHAR}, #{item.catUrl,jdbcType=VARCHAR}, #{item.sortWeight,jdbcType=DOUBLE},
-      #{item.imgName,jdbcType=VARCHAR}, #{item.imgUrl,jdbcType=VARCHAR}, #{item.version,jdbcType=VARCHAR},
-      #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP})
-    </foreach>
-  </insert>
 </mapper>

@@ -15,8 +15,8 @@ import java.io.InputStreamReader;
 public class JsonReadService {
 
 
-    public ShopeeCatParam getJsonObj(){
-        String jsonText = getDatafromFile("shopee-category-th");
+    public ShopeeCatParam getJsonObj(String fileName){
+        String jsonText = getDatafromFile(fileName);
         ShopeeCatParam shopeeCatParam = JSONObject.parseObject(jsonText, ShopeeCatParam.class);
         return shopeeCatParam;
     }
@@ -27,7 +27,7 @@ public class JsonReadService {
      * @return
      */
     public static String getDatafromFile(String fileName) {
-        URL url = ClassLoader.getSystemResource("json/" + fileName + ".json");
+        URL url = ClassLoader.getSystemResource("json/category/" + fileName + ".json");
         BufferedReader reader = null;
         String laststr = "";
         try {

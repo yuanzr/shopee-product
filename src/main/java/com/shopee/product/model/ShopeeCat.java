@@ -14,6 +14,8 @@ public class ShopeeCat {
 
     private String enName;
 
+    private String zhName;
+
     private String catUrl;
 
     private Double sortWeight;
@@ -21,6 +23,8 @@ public class ShopeeCat {
     private String imgName;
 
     private String imgUrl;
+
+    private Integer regionNo;
 
     private String version;
 
@@ -70,6 +74,14 @@ public class ShopeeCat {
         this.enName = enName == null ? null : enName.trim();
     }
 
+    public String getZhName() {
+        return zhName;
+    }
+
+    public void setZhName(String zhName) {
+        this.zhName = zhName == null ? null : zhName.trim();
+    }
+
     public String getCatUrl() {
         return catUrl;
     }
@@ -100,6 +112,14 @@ public class ShopeeCat {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl == null ? null : imgUrl.trim();
+    }
+
+    public Integer getRegionNo() {
+        return regionNo;
+    }
+
+    public void setRegionNo(Integer regionNo) {
+        this.regionNo = regionNo;
     }
 
     public String getVersion() {

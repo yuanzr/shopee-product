@@ -1,6 +1,7 @@
 package com.shopee.product.service.impl;
 
 import com.shopee.product.mapper.ShopeeCatMapper;
+import com.shopee.product.mapper.ShopeeCatMapperExpand;
 import com.shopee.product.model.ShopeeCat;
 import com.shopee.product.model.ShopeeCatExample;
 import com.shopee.product.model.ShopeeCatExample.Criteria;
@@ -8,6 +9,7 @@ import com.shopee.product.model.ShopeeCatStat;
 import com.shopee.product.param.ShopeeCatParam;
 import com.shopee.product.service.JsonReadService;
 import com.shopee.product.service.ShopeeCatService;
+import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -21,6 +23,9 @@ public class ShopeeCatServiceImpl  implements ShopeeCatService {
 
     @Autowired
     private ShopeeCatMapper shopeeCatMapper;
+
+    @Autowired
+    private ShopeeCatMapperExpand shopeeCatMapperExpand;
 
     @Autowired
     private JsonReadService jsonReadService;
@@ -38,14 +43,14 @@ public class ShopeeCatServiceImpl  implements ShopeeCatService {
                 }
                 if (skip + limitSize > size) {
                     List<ShopeeCat> recordList = list.subList(skip, list.size());
-                    shopeeCatMapper.insertList(recordList);
+                    shopeeCatMapperExpand.insertList(recordList);
                     continue;
                 }
                 List<ShopeeCat> recordList = list.subList(skip, skip+limitSize);
-                shopeeCatMapper.insertList(recordList);
+                shopeeCatMapperExpand.insertList(recordList);
             }
         }else {
-            shopeeCatMapper.insertList(list);
+            shopeeCatMapperExpand.insertList(list);
         }
     }
 
@@ -73,9 +78,26 @@ public class ShopeeCatServiceImpl  implements ShopeeCatService {
 
 
     public List<ShopeeCat> getAllCat(){
-        ShopeeCatParam param = jsonReadService.getJsonObj();
+        String fileName = "shopee-category-tw";
+        ShopeeCatParam param = jsonReadService.getJsonObj(fileName);
         List<ShopeeCatParam.DataBean> data = param.getData();
         String version = param.getVersion();
+        /**
+         * 区号:
+         * 泰国:66
+         * 台湾:886
+         */
+        Integer regionNo = 886;
+        /**
+         * 泰国:shopee.co.th
+         * 台湾:shopee.tw(翻墙)/xiapi.xiapibuy.com(大陆)
+         */
+        String host ="xiapi.xiapibuy.com";
+        /**
+         * 泰国:cf.shopee.co.th
+         * 台湾:cf.shopee.tw
+         */
+        String fileHost = "cf.shopee.tw";
 
         List<ShopeeCat> firstCatList  = new ArrayList<>();//一级分类
         List<ShopeeCat> secondCatList = new ArrayList<>();//二级分类
@@ -93,9 +115,10 @@ public class ShopeeCatServiceImpl  implements ShopeeCatService {
             firstCat.setSortWeight(main.getSort_weight());
             firstCat.setImgName(main.getImage());
             firstCat.setUpdateTime(now);
-            firstCat.setCatUrl("https://shopee.co.th/"+main.getDisplay_name()+"-cat."+main.getCatid());//规则:https://shopee.co.th/一级分类名称-cat.一级分类ID
-            firstCat.setImgUrl("https://cf.shopee.co.th/file/"+main.getImage()+"_tn");//规则:https://cf.shopee.co.th/file/0091cb7e7d970b10dcf233d2e4faf9b9_tn
+            firstCat.setCatUrl("https://"+ host +"/"+main.getDisplay_name()+"-cat."+main.getCatid());//规则:https://shopee.co.th/一级分类名称-cat.一级分类ID
+            firstCat.setImgUrl("https://"+ fileHost +"/file/"+main.getImage()+"_tn");//规则:https://cf.shopee.co.th/file/0091cb7e7d970b10dcf233d2e4faf9b9_tn
             firstCat.setVersion(version);
+            firstCat.setRegionNo(regionNo);
             if (StringUtils.isEmpty(main.getName())){
 //                String translate = HttpUtils.translate(main.getDisplay_name());
 //                firstCat.setEnName(translate);
@@ -114,9 +137,10 @@ public class ShopeeCatServiceImpl  implements ShopeeCatService {
                 secondCat.setSortWeight(secondBean.getSort_weight());
                 secondCat.setImgName(secondBean.getImage());
                 secondCat.setUpdateTime(now);
-                secondCat.setCatUrl("https://shopee.co.th/"+secondBean.getDisplay_name()+"-cat."+main.getCatid()+"."+secondBean.getCatid());//规则:https://shopee.co.th/二级分类名称-cat.一级分类ID.二级分类ID
-                secondCat.setImgUrl("https://cf.shopee.co.th/file/"+secondBean.getImage()+"_tn");//规则:https://cf.shopee.co.th/file/0091cb7e7d970b10dcf233d2e4faf9b9_tn
+                secondCat.setCatUrl("https://"+ host +"/"+secondBean.getDisplay_name()+"-cat."+main.getCatid()+"."+secondBean.getCatid());//规则:https://shopee.co.th/二级分类名称-cat.一级分类ID.二级分类ID
+                secondCat.setImgUrl("https://"+ fileHost +"/file/"+secondBean.getImage()+"_tn");//规则:https://cf.shopee.co.th/file/0091cb7e7d970b10dcf233d2e4faf9b9_tn
                 secondCat.setVersion(version);
+                secondCat.setRegionNo(regionNo);
                 if (StringUtils.isEmpty(main.getName())){
 //                    String translate = HttpUtils.translate(secondBean.getDisplay_name());
 //                    secondCat.setEnName(translate);
@@ -134,9 +158,10 @@ public class ShopeeCatServiceImpl  implements ShopeeCatService {
                     thirdCat.setSortWeight(0.0);
                     thirdCat.setImgName(thirdBean.getImage());
                     thirdCat.setUpdateTime(now);
-                    thirdCat.setCatUrl("https://shopee.co.th/"+thirdBean.getDisplay_name()+"-cat."+main.getCatid()+"."+secondBean.getCatid()+"."+thirdBean.getCatid());//规则:https://shopee.co.th/三级级分类名称-cat.一级分类ID
-                    thirdCat.setImgUrl("https://cf.shopee.co.th/file/"+thirdBean.getImage()+"_tn");//规则:https://cf.shopee.co.th/file/0091cb7e7d970b10dcf233d2e4faf9b9_tn
+                    thirdCat.setCatUrl("https://"+ host +"/"+thirdBean.getDisplay_name()+"-cat."+main.getCatid()+"."+secondBean.getCatid()+"."+thirdBean.getCatid());//规则:https://shopee.co.th/三级级分类名称-cat.一级分类ID
+                    thirdCat.setImgUrl("https://"+ fileHost+"/file/"+thirdBean.getImage()+"_tn");//规则:https://cf.shopee.co.th/file/0091cb7e7d970b10dcf233d2e4faf9b9_tn
                     thirdCat.setVersion(version);
+                    thirdCat.setRegionNo(regionNo);
 //                    String translate = HttpUtils.translate(thirdBean.getDisplay_name());
 //                    thirdCat.setEnName(translate);
                     thirdCatList.add(thirdCat);

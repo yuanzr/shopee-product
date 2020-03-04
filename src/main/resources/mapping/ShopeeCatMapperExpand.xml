@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shopee.product.mapper.ShopeeCatMapperExpand" >
+
+
+  <insert id="insertList" parameterType="java.util.List">
+    insert into shopee_cat (cat_id, parent_category_id, display_name,
+        en_name, zh_name, cat_url,sort_weight, img_name, img_url,region_no,
+        version, create_time,update_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.catId,jdbcType=BIGINT}, #{item.parentCategoryId,jdbcType=BIGINT}, #{item.displayName,jdbcType=VARCHAR},
+      #{item.enName,jdbcType=VARCHAR}, #{item.zhName,jdbcType=VARCHAR}, #{item.catUrl,jdbcType=VARCHAR},
+      #{item.sortWeight,jdbcType=DOUBLE}, #{item.imgName,jdbcType=VARCHAR}, #{item.imgUrl,jdbcType=VARCHAR},
+      #{item.regionNo,jdbcType=INTEGER}, #{item.version,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP},
+      #{item.updateTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+</mapper>

@@ -27,10 +27,4 @@ public interface ShopeeCatMapper {
 
     int updateByPrimaryKeySelective(ShopeeCat record);
 
-
-    /**
-     * 批量插入分类
-     * @param list
-     */
-    void  insertList (List<ShopeeCat> list );
 }

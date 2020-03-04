@@ -425,6 +425,76 @@ public class ShopeeCatExample {
             return (Criteria) this;
         }
 
+        public Criteria andZhNameIsNull() {
+            addCriterion("zh_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameIsNotNull() {
+            addCriterion("zh_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameEqualTo(String value) {
+            addCriterion("zh_name =", value, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameNotEqualTo(String value) {
+            addCriterion("zh_name <>", value, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameGreaterThan(String value) {
+            addCriterion("zh_name >", value, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameGreaterThanOrEqualTo(String value) {
+            addCriterion("zh_name >=", value, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameLessThan(String value) {
+            addCriterion("zh_name <", value, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameLessThanOrEqualTo(String value) {
+            addCriterion("zh_name <=", value, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameLike(String value) {
+            addCriterion("zh_name like", value, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameNotLike(String value) {
+            addCriterion("zh_name not like", value, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameIn(List<String> values) {
+            addCriterion("zh_name in", values, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameNotIn(List<String> values) {
+            addCriterion("zh_name not in", values, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameBetween(String value1, String value2) {
+            addCriterion("zh_name between", value1, value2, "zhName");
+            return (Criteria) this;
+        }
+
+        public Criteria andZhNameNotBetween(String value1, String value2) {
+            addCriterion("zh_name not between", value1, value2, "zhName");
+            return (Criteria) this;
+        }
+
         public Criteria andCatUrlIsNull() {
             addCriterion("cat_url is null");
             return (Criteria) this;
@@ -692,6 +762,66 @@ public class ShopeeCatExample {
 
         public Criteria andImgUrlNotBetween(String value1, String value2) {
             addCriterion("img_url not between", value1, value2, "imgUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoIsNull() {
+            addCriterion("region_no is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoIsNotNull() {
+            addCriterion("region_no is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoEqualTo(Integer value) {
+            addCriterion("region_no =", value, "regionNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoNotEqualTo(Integer value) {
+            addCriterion("region_no <>", value, "regionNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoGreaterThan(Integer value) {
+            addCriterion("region_no >", value, "regionNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoGreaterThanOrEqualTo(Integer value) {
+            addCriterion("region_no >=", value, "regionNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoLessThan(Integer value) {
+            addCriterion("region_no <", value, "regionNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoLessThanOrEqualTo(Integer value) {
+            addCriterion("region_no <=", value, "regionNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoIn(List<Integer> values) {
+            addCriterion("region_no in", values, "regionNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoNotIn(List<Integer> values) {
+            addCriterion("region_no not in", values, "regionNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoBetween(Integer value1, Integer value2) {
+            addCriterion("region_no between", value1, value2, "regionNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoNotBetween(Integer value1, Integer value2) {
+            addCriterion("region_no not between", value1, value2, "regionNo");
             return (Criteria) this;
         }
 
