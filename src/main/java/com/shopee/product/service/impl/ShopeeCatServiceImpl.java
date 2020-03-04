@@ -76,6 +76,14 @@ public class ShopeeCatServiceImpl  implements ShopeeCatService {
         return shopeeCatMapper.selectByExample(example);
     }
 
+    @Override
+    public List<ShopeeCat> getAllChildInParent(Long parentId, Integer regionNo) {
+        ShopeeCatExample example = new ShopeeCatExample();
+        example.createCriteria().andParentCategoryIdEqualTo(parentId).andRegionNoEqualTo(regionNo);
+        example.setOrderByClause("record_id asc");
+        return shopeeCatMapper.selectByExample(example);
+    }
+
 
     public List<ShopeeCat> getAllCat(){
         String fileName = "shopee-category-tw";

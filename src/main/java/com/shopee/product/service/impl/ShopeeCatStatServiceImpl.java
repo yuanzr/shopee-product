@@ -18,6 +18,8 @@ import java.util.Date;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -193,35 +195,41 @@ public class ShopeeCatStatServiceImpl implements ShopeeCatStatService {
 
 
     @Override
-    public void importJsonData(Long parentId,Long catIds){
-        List<ShopeeItemsParam.ItemsBean> thridTotalItems = new ArrayList<>();
-        Date date = new Date();
+    public void importJsonData(Long parentId,Integer regionNo){
+
         String strDateFormat = "yyyyMMdd";
         SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
+        Date date    = new Date();
         Long version = Long.parseLong(sdf.format(date));
 
+        List<ShopeeCat>  allChildCatList = shopeeCatService.getAllChildInParent(parentId,regionNo);
+        List<ShopeeCatStat> catStatList = new ArrayList<>();
 
-        ShopeeCatStat statCat = new ShopeeCatStat();
-        statCat.setParentCategoryId(parentId);
-        statCat.setCatId(catIds);
-        statCat.setVersion(version);
-
-        for (int i = 1; i < 2 ; i++) {
-            String jsonText = JsonReadService.getDatafromFile("shopee-items-sales-" + i);
+        for (int i = 0; i < allChildCatList.size(); i++) {
+            ShopeeCat cat = allChildCatList.get(i);
+            List<ShopeeItemsParam.ItemsBean> catTotalItems = new ArrayList<>();
+            ShopeeCatStat statCat = new ShopeeCatStat();
+            statCat.setParentCategoryId(parentId);
+            statCat.setCatId(cat.getCatId());
+            statCat.setVersion(version);
+            statCat.setRegionNo(regionNo);
+            String jsonText = JsonReadService.getDatafromFile("shopee-items-sales-" + (i+1));
             ShopeeItemsParam shopeeCatParam = JSONObject.parseObject(jsonText, ShopeeItemsParam.class);
             statCat.setTotalProCount(shopeeCatParam.getTotal_count());
             List<ShopeeItemsParam.ItemsBean> items = shopeeCatParam.getItems();
-            thridTotalItems.addAll(items);
-        }
-        //统计当前三级类目的销量汇总信息
-        IntSummaryStatistics collect = thridTotalItems.stream().collect(Collectors.summarizingInt(value -> value.getSold()));
-        //计算首页平均销量:销量总和/产品总数量
-        Double homeAvgSoldThird = collect.getAverage();
-        statCat.setTotalSoldSum(homeAvgSoldThird.intValue());
-        //计算竞争比重:首页平均销量 / 此分类产品总数
-        statCat.setCatCompeteWeight(divide(homeAvgSoldThird,statCat.getTotalProCount().doubleValue()));
-        shopeeCatStatMapper.insert(statCat);
+            catTotalItems.addAll(items);
 
+            //统计当前子类目的销量汇总信息
+            IntSummaryStatistics collect = catTotalItems.stream().collect(Collectors.summarizingInt(value -> value.getSold()));
+            //计算首页平均销量:销量总和/产品总数量
+            Double homeAvgSoldThird = collect.getAverage();
+            statCat.setTotalSoldSum(homeAvgSoldThird.intValue());
+            //计算竞争比重:首页平均销量 / 此分类产品总数
+            statCat.setCatCompeteWeight(divide(homeAvgSoldThird,statCat.getTotalProCount().doubleValue()));
+            catStatList.add(statCat);
+        }
+
+        shopeeCatStatMapperExpand.insertList(catStatList);
     }
 
 

@@ -30,4 +30,11 @@ public interface ShopeeCatService {
      */
     List<ShopeeCat>  selectParentCategoryId(Long catId);
 
+    /**
+     * 获取父类下的所有子类目
+     * @param parentId  父类ID
+     * @param regionNo  国家好
+     * @return
+     */
+    List<ShopeeCat> getAllChildInParent(Long parentId, Integer regionNo);
 }

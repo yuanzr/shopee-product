@@ -4,12 +4,12 @@
     <!--批量插入List-->
     <insert id="insertList" parameterType="java.util.List">
      insert into shopee_cat_stat (parent_category_id, cat_id, total_pro_count,
-        total_sold_sum, cat_compete_weight, version)
+        total_sold_sum, cat_compete_weight, region_no,version)
      values
         <foreach collection="list" item="item" separator=",">
-         (#{parentCategoryId,jdbcType=BIGINT}, #{catId,jdbcType=BIGINT}, #{totalProCount,jdbcType=INTEGER},
-          #{totalSoldSum,jdbcType=INTEGER}, #{catCompeteWeight,jdbcType=DOUBLE}, #{version,jdbcType=BIGINT}
-          )
+         (#{item.parentCategoryId,jdbcType=BIGINT}, #{item.catId,jdbcType=BIGINT}, #{item.totalProCount,jdbcType=INTEGER},
+          #{item.totalSoldSum,jdbcType=INTEGER}, #{item.catCompeteWeight,jdbcType=DOUBLE}, #{item.regionNo,jdbcType=INTEGER},
+          #{item.version,jdbcType=BIGINT})
         </foreach>
     </insert>
 </mapper>

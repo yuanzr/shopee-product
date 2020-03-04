@@ -4,5 +4,5 @@ public interface ShopeeCatStatService {
 
     void genCatStatData(Long catId);
 
-    void importJsonData(Long parentId,Long catIds);
+    void importJsonData(Long parentId,Integer regionNo);
 }

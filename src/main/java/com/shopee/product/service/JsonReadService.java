@@ -27,7 +27,7 @@ public class JsonReadService {
      * @return
      */
     public static String getDatafromFile(String fileName) {
-        URL url = ClassLoader.getSystemResource("json/category/" + fileName + ".json");
+        URL url = ClassLoader.getSystemResource("json/items/" + fileName + ".json");
         BufferedReader reader = null;
         String laststr = "";
         try {
