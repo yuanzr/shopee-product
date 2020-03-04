@@ -47,12 +47,12 @@ public class ShopeeItemsParam {
         private int price_max;              //最大价格
         private int price;                  //当前价格
         private List<WholeSaleTierBean> wholesale_tier_list;//批发价
-        private int view_count;
+        private int view_count;             //商品浏览量
         private int show_discount;          //当前折扣数字
         private String discount;            //当前折扣+%
         private int liked_count;            //点赞数量
-        private Long ctime;                  //上架时间
-        private Integer sold;                   //当月销量
+        private Long ctime;                 //上架时间
+        private Integer sold;               //当月销量
         private int historical_sold;        //历史销量
         private int stock;                  //库存数量
         private String brand;               //品牌名称

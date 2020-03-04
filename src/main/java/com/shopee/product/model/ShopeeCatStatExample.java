@@ -464,6 +464,66 @@ public class ShopeeCatStatExample {
             return (Criteria) this;
         }
 
+        public Criteria andRegionNoIsNull() {
+            addCriterion("region_no is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoIsNotNull() {
+            addCriterion("region_no is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoEqualTo(Integer value) {
+            addCriterion("region_no =", value, "regionNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoNotEqualTo(Integer value) {
+            addCriterion("region_no <>", value, "regionNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoGreaterThan(Integer value) {
+            addCriterion("region_no >", value, "regionNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoGreaterThanOrEqualTo(Integer value) {
+            addCriterion("region_no >=", value, "regionNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoLessThan(Integer value) {
+            addCriterion("region_no <", value, "regionNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoLessThanOrEqualTo(Integer value) {
+            addCriterion("region_no <=", value, "regionNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoIn(List<Integer> values) {
+            addCriterion("region_no in", values, "regionNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoNotIn(List<Integer> values) {
+            addCriterion("region_no not in", values, "regionNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoBetween(Integer value1, Integer value2) {
+            addCriterion("region_no between", value1, value2, "regionNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionNoNotBetween(Integer value1, Integer value2) {
+            addCriterion("region_no not between", value1, value2, "regionNo");
+            return (Criteria) this;
+        }
+
         public Criteria andVersionIsNull() {
             addCriterion("version is null");
             return (Criteria) this;

@@ -205,7 +205,8 @@ public class ShopeeCatStatServiceImpl implements ShopeeCatStatService {
         statCat.setParentCategoryId(parentId);
         statCat.setCatId(catIds);
         statCat.setVersion(version);
-        for (int i = 1; i < 6 ; i++) {
+
+        for (int i = 1; i < 2 ; i++) {
             String jsonText = JsonReadService.getDatafromFile("shopee-items-sales-" + i);
             ShopeeItemsParam shopeeCatParam = JSONObject.parseObject(jsonText, ShopeeItemsParam.class);
             statCat.setTotalProCount(shopeeCatParam.getTotal_count());

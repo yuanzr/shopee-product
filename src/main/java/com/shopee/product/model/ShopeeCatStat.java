@@ -23,6 +23,8 @@ public class ShopeeCatStat {
      */
     private Double catCompeteWeight;
 
+    private Integer regionNo;
+
     private Long version;
 
     private List<ShopeeCatStat> subList;
@@ -74,6 +76,14 @@ public class ShopeeCatStat {
 
     public void setCatCompeteWeight(Double catCompeteWeight) {
         this.catCompeteWeight = catCompeteWeight;
+    }
+
+    public Integer getRegionNo() {
+        return regionNo;
+    }
+
+    public void setRegionNo(Integer regionNo) {
+        this.regionNo = regionNo;
     }
 
     public Long getVersion() {

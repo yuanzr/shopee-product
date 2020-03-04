@@ -1,34 +1,35 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.shopee.product.mapper.ShopeeCatStatMapper" >
-  <resultMap id="BaseResultMap" type="com.shopee.product.model.ShopeeCatStat" >
-    <id column="record_id" property="recordId" jdbcType="BIGINT" />
-    <result column="parent_category_id" property="parentCategoryId" jdbcType="BIGINT" />
-    <result column="cat_id" property="catId" jdbcType="BIGINT" />
-    <result column="total_pro_count" property="totalProCount" jdbcType="INTEGER" />
-    <result column="total_sold_sum" property="totalSoldSum" jdbcType="INTEGER" />
-    <result column="cat_compete_weight" property="catCompeteWeight" jdbcType="DOUBLE" />
-    <result column="version" property="version" jdbcType="BIGINT" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shopee.product.mapper.ShopeeCatStatMapper">
+  <resultMap id="BaseResultMap" type="com.shopee.product.model.ShopeeCatStat">
+    <id column="record_id" jdbcType="BIGINT" property="recordId" />
+    <result column="parent_category_id" jdbcType="BIGINT" property="parentCategoryId" />
+    <result column="cat_id" jdbcType="BIGINT" property="catId" />
+    <result column="total_pro_count" jdbcType="INTEGER" property="totalProCount" />
+    <result column="total_sold_sum" jdbcType="INTEGER" property="totalSoldSum" />
+    <result column="cat_compete_weight" jdbcType="DOUBLE" property="catCompeteWeight" />
+    <result column="region_no" jdbcType="INTEGER" property="regionNo" />
+    <result column="version" jdbcType="BIGINT" property="version" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -39,25 +40,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                <when test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
                 </when>
@@ -68,128 +69,137 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List" >
+  <sql id="Base_Column_List">
     record_id, parent_category_id, cat_id, total_pro_count, total_sold_sum, cat_compete_weight, 
-    version
+    region_no, version
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.shopee.product.model.ShopeeCatStatExample" >
+  <select id="selectByExample" parameterType="com.shopee.product.model.ShopeeCatStatExample" resultMap="BaseResultMap">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
     from shopee_cat_stat
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null" >
+    <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from shopee_cat_stat
     where record_id = #{recordId,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from shopee_cat_stat
     where record_id = #{recordId,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.shopee.product.model.ShopeeCatStatExample" >
+  <delete id="deleteByExample" parameterType="com.shopee.product.model.ShopeeCatStatExample">
     delete from shopee_cat_stat
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.shopee.product.model.ShopeeCatStat" useGeneratedKeys="true" keyProperty="recordId" >
+  <insert id="insert" keyProperty="recordId" parameterType="com.shopee.product.model.ShopeeCatStat" useGeneratedKeys="true">
     insert into shopee_cat_stat (parent_category_id, cat_id, total_pro_count, 
-      total_sold_sum, cat_compete_weight, version
-      )
+      total_sold_sum, cat_compete_weight, region_no, 
+      version)
     values (#{parentCategoryId,jdbcType=BIGINT}, #{catId,jdbcType=BIGINT}, #{totalProCount,jdbcType=INTEGER}, 
-      #{totalSoldSum,jdbcType=INTEGER}, #{catCompeteWeight,jdbcType=DOUBLE}, #{version,jdbcType=BIGINT}
-      )
+      #{totalSoldSum,jdbcType=INTEGER}, #{catCompeteWeight,jdbcType=DOUBLE}, #{regionNo,jdbcType=INTEGER}, 
+      #{version,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.shopee.product.model.ShopeeCatStat" useGeneratedKeys="true" keyProperty="recordId" >
+  <insert id="insertSelective" keyProperty="recordId" parameterType="com.shopee.product.model.ShopeeCatStat" useGeneratedKeys="true">
     insert into shopee_cat_stat
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="parentCategoryId != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="parentCategoryId != null">
         parent_category_id,
       </if>
-      <if test="catId != null" >
+      <if test="catId != null">
         cat_id,
       </if>
-      <if test="totalProCount != null" >
+      <if test="totalProCount != null">
         total_pro_count,
       </if>
-      <if test="totalSoldSum != null" >
+      <if test="totalSoldSum != null">
         total_sold_sum,
       </if>
-      <if test="catCompeteWeight != null" >
+      <if test="catCompeteWeight != null">
         cat_compete_weight,
       </if>
-      <if test="version != null" >
+      <if test="regionNo != null">
+        region_no,
+      </if>
+      <if test="version != null">
         version,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="parentCategoryId != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="parentCategoryId != null">
         #{parentCategoryId,jdbcType=BIGINT},
       </if>
-      <if test="catId != null" >
+      <if test="catId != null">
         #{catId,jdbcType=BIGINT},
       </if>
-      <if test="totalProCount != null" >
+      <if test="totalProCount != null">
         #{totalProCount,jdbcType=INTEGER},
       </if>
-      <if test="totalSoldSum != null" >
+      <if test="totalSoldSum != null">
         #{totalSoldSum,jdbcType=INTEGER},
       </if>
-      <if test="catCompeteWeight != null" >
+      <if test="catCompeteWeight != null">
         #{catCompeteWeight,jdbcType=DOUBLE},
       </if>
-      <if test="version != null" >
+      <if test="regionNo != null">
+        #{regionNo,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
         #{version,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.shopee.product.model.ShopeeCatStatExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.shopee.product.model.ShopeeCatStatExample" resultType="java.lang.Integer">
     select count(*) from shopee_cat_stat
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+  <update id="updateByExampleSelective" parameterType="map">
     update shopee_cat_stat
-    <set >
-      <if test="record.recordId != null" >
+    <set>
+      <if test="record.recordId != null">
         record_id = #{record.recordId,jdbcType=BIGINT},
       </if>
-      <if test="record.parentCategoryId != null" >
+      <if test="record.parentCategoryId != null">
         parent_category_id = #{record.parentCategoryId,jdbcType=BIGINT},
       </if>
-      <if test="record.catId != null" >
+      <if test="record.catId != null">
         cat_id = #{record.catId,jdbcType=BIGINT},
       </if>
-      <if test="record.totalProCount != null" >
+      <if test="record.totalProCount != null">
         total_pro_count = #{record.totalProCount,jdbcType=INTEGER},
       </if>
-      <if test="record.totalSoldSum != null" >
+      <if test="record.totalSoldSum != null">
         total_sold_sum = #{record.totalSoldSum,jdbcType=INTEGER},
       </if>
-      <if test="record.catCompeteWeight != null" >
+      <if test="record.catCompeteWeight != null">
         cat_compete_weight = #{record.catCompeteWeight,jdbcType=DOUBLE},
       </if>
-      <if test="record.version != null" >
+      <if test="record.regionNo != null">
+        region_no = #{record.regionNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.version != null">
         version = #{record.version,jdbcType=BIGINT},
       </if>
     </set>
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map" >
+  <update id="updateByExample" parameterType="map">
     update shopee_cat_stat
     set record_id = #{record.recordId,jdbcType=BIGINT},
       parent_category_id = #{record.parentCategoryId,jdbcType=BIGINT},
@@ -197,43 +207,49 @@
       total_pro_count = #{record.totalProCount,jdbcType=INTEGER},
       total_sold_sum = #{record.totalSoldSum,jdbcType=INTEGER},
       cat_compete_weight = #{record.catCompeteWeight,jdbcType=DOUBLE},
+      region_no = #{record.regionNo,jdbcType=INTEGER},
       version = #{record.version,jdbcType=BIGINT}
-    <if test="_parameter != null" >
+    <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.shopee.product.model.ShopeeCatStat" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.shopee.product.model.ShopeeCatStat">
     update shopee_cat_stat
-    <set >
-      <if test="parentCategoryId != null" >
+    <set>
+      <if test="parentCategoryId != null">
         parent_category_id = #{parentCategoryId,jdbcType=BIGINT},
       </if>
-      <if test="catId != null" >
+      <if test="catId != null">
         cat_id = #{catId,jdbcType=BIGINT},
       </if>
-      <if test="totalProCount != null" >
+      <if test="totalProCount != null">
         total_pro_count = #{totalProCount,jdbcType=INTEGER},
       </if>
-      <if test="totalSoldSum != null" >
+      <if test="totalSoldSum != null">
         total_sold_sum = #{totalSoldSum,jdbcType=INTEGER},
       </if>
-      <if test="catCompeteWeight != null" >
+      <if test="catCompeteWeight != null">
         cat_compete_weight = #{catCompeteWeight,jdbcType=DOUBLE},
       </if>
-      <if test="version != null" >
+      <if test="regionNo != null">
+        region_no = #{regionNo,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
         version = #{version,jdbcType=BIGINT},
       </if>
     </set>
     where record_id = #{recordId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.shopee.product.model.ShopeeCatStat" >
+  <update id="updateByPrimaryKey" parameterType="com.shopee.product.model.ShopeeCatStat">
     update shopee_cat_stat
     set parent_category_id = #{parentCategoryId,jdbcType=BIGINT},
       cat_id = #{catId,jdbcType=BIGINT},
       total_pro_count = #{totalProCount,jdbcType=INTEGER},
       total_sold_sum = #{totalSoldSum,jdbcType=INTEGER},
       cat_compete_weight = #{catCompeteWeight,jdbcType=DOUBLE},
+      region_no = #{regionNo,jdbcType=INTEGER},
       version = #{version,jdbcType=BIGINT}
     where record_id = #{recordId,jdbcType=BIGINT}
   </update>
+
 </mapper>
