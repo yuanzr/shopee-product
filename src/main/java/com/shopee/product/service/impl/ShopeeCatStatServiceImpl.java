@@ -217,7 +217,9 @@ public class ShopeeCatStatServiceImpl implements ShopeeCatStatService {
             ShopeeItemsParam shopeeCatParam = JSONObject.parseObject(jsonText, ShopeeItemsParam.class);
             statCat.setTotalProCount(shopeeCatParam.getTotal_count());
             List<ShopeeItemsParam.ItemsBean> items = shopeeCatParam.getItems();
-            catTotalItems.addAll(items);
+            List<ItemsBean> itemsBeans = items.subList(5, 45);
+            catTotalItems.addAll(itemsBeans);
+//            catTotalItems.addAll(items);
 
             //统计当前子类目的销量汇总信息
             IntSummaryStatistics collect = catTotalItems.stream().collect(Collectors.summarizingInt(value -> value.getSold()));

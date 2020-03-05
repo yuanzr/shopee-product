@@ -43,9 +43,9 @@ public class ShopeeItemsParam {
         private String name;                //商品标题
         private String image;               //商品主图
         private int catid;                  //分类ID
-        private int price_min;              //最小价格
-        private int price_max;              //最大价格
-        private int price;                  //当前价格
+        private long price_min;              //最小价格
+        private long price_max;              //最大价格
+        private long price;                  //当前价格
         private List<WholeSaleTierBean> wholesale_tier_list;//批发价
         private int view_count;             //商品浏览量
         private int show_discount;          //当前折扣数字
@@ -56,9 +56,9 @@ public class ShopeeItemsParam {
         private int historical_sold;        //历史销量
         private int stock;                  //库存数量
         private String brand;               //品牌名称
-        private int price_before_discount;  //之前的折扣价格
-        private int price_min_before_discount;//之前的最小折扣价格
-        private int price_max_before_discount;//之前最大的折扣价格
+        private long price_before_discount;  //之前的折扣价格
+        private long price_min_before_discount;//之前的最小折扣价格
+        private long price_max_before_discount;//之前最大的折扣价格
         private ItemRatingBean item_rating;//商品好评率
         private int cmt_count;
         private String reference_item_id;
@@ -67,19 +67,19 @@ public class ShopeeItemsParam {
         private List<String> images;
         private List<Integer> label_ids;    //标签ID
 
-        public int getPrice_min() {
+        public long getPrice_min() {
             return price_min;
         }
 
-        public void setPrice_min(int price_min) {
+        public void setPrice_min(long price_min) {
             this.price_min = price_min;
         }
 
-        public int getPrice() {
+        public long getPrice() {
             return price;
         }
 
-        public void setPrice(int price) {
+        public void setPrice(long price) {
             this.price = price;
         }
 
@@ -115,11 +115,11 @@ public class ShopeeItemsParam {
             this.brand = brand;
         }
 
-        public int getPrice_min_before_discount() {
+        public long getPrice_min_before_discount() {
             return price_min_before_discount;
         }
 
-        public void setPrice_min_before_discount(int price_min_before_discount) {
+        public void setPrice_min_before_discount(long price_min_before_discount) {
             this.price_min_before_discount = price_min_before_discount;
         }
 
@@ -131,19 +131,19 @@ public class ShopeeItemsParam {
             this.image = image;
         }
 
-        public int getPrice_before_discount() {
+        public long getPrice_before_discount() {
             return price_before_discount;
         }
 
-        public void setPrice_before_discount(int price_before_discount) {
+        public void setPrice_before_discount(long price_before_discount) {
             this.price_before_discount = price_before_discount;
         }
 
-        public int getPrice_max_before_discount() {
+        public long getPrice_max_before_discount() {
             return price_max_before_discount;
         }
 
-        public void setPrice_max_before_discount(int price_max_before_discount) {
+        public void setPrice_max_before_discount(long price_max_before_discount) {
             this.price_max_before_discount = price_max_before_discount;
         }
 
@@ -187,11 +187,11 @@ public class ShopeeItemsParam {
             this.shopid = shopid;
         }
 
-        public int getPrice_max() {
+        public long getPrice_max() {
             return price_max;
         }
 
-        public void setPrice_max(int price_max) {
+        public void setPrice_max(long price_max) {
             this.price_max = price_max;
         }
 

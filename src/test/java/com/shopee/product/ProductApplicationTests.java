@@ -48,7 +48,7 @@ class ProductApplicationTests {
 
     @Test
     void importJsonData() {
-        Integer parentId = 63;
+        Integer parentId = 14278;
         Integer regionNo = 886;
         shopeeCatStatService.importJsonData(parentId.longValue(),regionNo);
     }
