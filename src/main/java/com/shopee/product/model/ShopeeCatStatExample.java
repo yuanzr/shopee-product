@@ -404,6 +404,66 @@ public class ShopeeCatStatExample {
             return (Criteria) this;
         }
 
+        public Criteria andHomeSoldAvgIsNull() {
+            addCriterion("home_sold_avg is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeSoldAvgIsNotNull() {
+            addCriterion("home_sold_avg is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeSoldAvgEqualTo(Integer value) {
+            addCriterion("home_sold_avg =", value, "homeSoldAvg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeSoldAvgNotEqualTo(Integer value) {
+            addCriterion("home_sold_avg <>", value, "homeSoldAvg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeSoldAvgGreaterThan(Integer value) {
+            addCriterion("home_sold_avg >", value, "homeSoldAvg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeSoldAvgGreaterThanOrEqualTo(Integer value) {
+            addCriterion("home_sold_avg >=", value, "homeSoldAvg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeSoldAvgLessThan(Integer value) {
+            addCriterion("home_sold_avg <", value, "homeSoldAvg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeSoldAvgLessThanOrEqualTo(Integer value) {
+            addCriterion("home_sold_avg <=", value, "homeSoldAvg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeSoldAvgIn(List<Integer> values) {
+            addCriterion("home_sold_avg in", values, "homeSoldAvg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeSoldAvgNotIn(List<Integer> values) {
+            addCriterion("home_sold_avg not in", values, "homeSoldAvg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeSoldAvgBetween(Integer value1, Integer value2) {
+            addCriterion("home_sold_avg between", value1, value2, "homeSoldAvg");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeSoldAvgNotBetween(Integer value1, Integer value2) {
+            addCriterion("home_sold_avg not between", value1, value2, "homeSoldAvg");
+            return (Criteria) this;
+        }
+
         public Criteria andCatCompeteWeightIsNull() {
             addCriterion("cat_compete_weight is null");
             return (Criteria) this;

@@ -223,9 +223,15 @@ public class ShopeeCatStatServiceImpl implements ShopeeCatStatService {
 
             //统计当前子类目的销量汇总信息
             IntSummaryStatistics collect = catTotalItems.stream().collect(Collectors.summarizingInt(value -> value.getSold()));
+
             //计算首页平均销量:销量总和/产品总数量
             Double homeAvgSoldThird = collect.getAverage();
-            statCat.setTotalSoldSum(homeAvgSoldThird.intValue());
+            statCat.setHomeSoldAvg(homeAvgSoldThird.intValue());
+
+            //首页总销量
+            Long totalSoldSum = collect.getSum();
+            statCat.setTotalSoldSum(totalSoldSum.intValue());
+
             //计算竞争比重:首页平均销量 / 此分类产品总数
             statCat.setCatCompeteWeight(divide(homeAvgSoldThird,statCat.getTotalProCount().doubleValue()));
             catStatList.add(statCat);

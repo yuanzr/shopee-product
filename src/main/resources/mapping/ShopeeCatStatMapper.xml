@@ -7,6 +7,7 @@
     <result column="cat_id" jdbcType="BIGINT" property="catId" />
     <result column="total_pro_count" jdbcType="INTEGER" property="totalProCount" />
     <result column="total_sold_sum" jdbcType="INTEGER" property="totalSoldSum" />
+    <result column="home_sold_avg" jdbcType="INTEGER" property="homeSoldAvg" />
     <result column="cat_compete_weight" jdbcType="DOUBLE" property="catCompeteWeight" />
     <result column="region_no" jdbcType="INTEGER" property="regionNo" />
     <result column="version" jdbcType="BIGINT" property="version" />
@@ -70,8 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    record_id, parent_category_id, cat_id, total_pro_count, total_sold_sum, cat_compete_weight, 
-    region_no, version
+    record_id, parent_category_id, cat_id, total_pro_count, total_sold_sum, home_sold_avg, 
+    cat_compete_weight, region_no, version
   </sql>
   <select id="selectByExample" parameterType="com.shopee.product.model.ShopeeCatStatExample" resultMap="BaseResultMap">
     select
@@ -106,11 +107,11 @@
   </delete>
   <insert id="insert" keyProperty="recordId" parameterType="com.shopee.product.model.ShopeeCatStat" useGeneratedKeys="true">
     insert into shopee_cat_stat (parent_category_id, cat_id, total_pro_count, 
-      total_sold_sum, cat_compete_weight, region_no, 
-      version)
+      total_sold_sum, home_sold_avg, cat_compete_weight, 
+      region_no, version)
     values (#{parentCategoryId,jdbcType=BIGINT}, #{catId,jdbcType=BIGINT}, #{totalProCount,jdbcType=INTEGER}, 
-      #{totalSoldSum,jdbcType=INTEGER}, #{catCompeteWeight,jdbcType=DOUBLE}, #{regionNo,jdbcType=INTEGER}, 
-      #{version,jdbcType=BIGINT})
+      #{totalSoldSum,jdbcType=INTEGER}, #{homeSoldAvg,jdbcType=INTEGER}, #{catCompeteWeight,jdbcType=DOUBLE}, 
+      #{regionNo,jdbcType=INTEGER}, #{version,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" keyProperty="recordId" parameterType="com.shopee.product.model.ShopeeCatStat" useGeneratedKeys="true">
     insert into shopee_cat_stat
@@ -126,6 +127,9 @@
       </if>
       <if test="totalSoldSum != null">
         total_sold_sum,
+      </if>
+      <if test="homeSoldAvg != null">
+        home_sold_avg,
       </if>
       <if test="catCompeteWeight != null">
         cat_compete_weight,
@@ -149,6 +153,9 @@
       </if>
       <if test="totalSoldSum != null">
         #{totalSoldSum,jdbcType=INTEGER},
+      </if>
+      <if test="homeSoldAvg != null">
+        #{homeSoldAvg,jdbcType=INTEGER},
       </if>
       <if test="catCompeteWeight != null">
         #{catCompeteWeight,jdbcType=DOUBLE},
@@ -185,6 +192,9 @@
       <if test="record.totalSoldSum != null">
         total_sold_sum = #{record.totalSoldSum,jdbcType=INTEGER},
       </if>
+      <if test="record.homeSoldAvg != null">
+        home_sold_avg = #{record.homeSoldAvg,jdbcType=INTEGER},
+      </if>
       <if test="record.catCompeteWeight != null">
         cat_compete_weight = #{record.catCompeteWeight,jdbcType=DOUBLE},
       </if>
@@ -206,6 +216,7 @@
       cat_id = #{record.catId,jdbcType=BIGINT},
       total_pro_count = #{record.totalProCount,jdbcType=INTEGER},
       total_sold_sum = #{record.totalSoldSum,jdbcType=INTEGER},
+      home_sold_avg = #{record.homeSoldAvg,jdbcType=INTEGER},
       cat_compete_weight = #{record.catCompeteWeight,jdbcType=DOUBLE},
       region_no = #{record.regionNo,jdbcType=INTEGER},
       version = #{record.version,jdbcType=BIGINT}
@@ -228,6 +239,9 @@
       <if test="totalSoldSum != null">
         total_sold_sum = #{totalSoldSum,jdbcType=INTEGER},
       </if>
+      <if test="homeSoldAvg != null">
+        home_sold_avg = #{homeSoldAvg,jdbcType=INTEGER},
+      </if>
       <if test="catCompeteWeight != null">
         cat_compete_weight = #{catCompeteWeight,jdbcType=DOUBLE},
       </if>
@@ -246,10 +260,10 @@
       cat_id = #{catId,jdbcType=BIGINT},
       total_pro_count = #{totalProCount,jdbcType=INTEGER},
       total_sold_sum = #{totalSoldSum,jdbcType=INTEGER},
+      home_sold_avg = #{homeSoldAvg,jdbcType=INTEGER},
       cat_compete_weight = #{catCompeteWeight,jdbcType=DOUBLE},
       region_no = #{regionNo,jdbcType=INTEGER},
       version = #{version,jdbcType=BIGINT}
     where record_id = #{recordId,jdbcType=BIGINT}
   </update>
-
 </mapper>

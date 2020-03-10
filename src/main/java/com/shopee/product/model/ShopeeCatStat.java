@@ -11,16 +11,10 @@ public class ShopeeCatStat {
 
     private Integer totalProCount;
 
-    /**
-     * 首页平均销量,暂时取三级类目的前10页
-     *  = 销量总和/产品数量
-     */
     private Integer totalSoldSum;
-    /**
-     * 竞争比重 = 首页平均销量 / 此分类产品总数
-     * catCompeteWeight = totalSoldSum/totalProCount
-     *
-     */
+
+    private Integer homeSoldAvg;
+
     private Double catCompeteWeight;
 
     private Integer regionNo;
@@ -68,6 +62,14 @@ public class ShopeeCatStat {
 
     public void setTotalSoldSum(Integer totalSoldSum) {
         this.totalSoldSum = totalSoldSum;
+    }
+
+    public Integer getHomeSoldAvg() {
+        return homeSoldAvg;
+    }
+
+    public void setHomeSoldAvg(Integer homeSoldAvg) {
+        this.homeSoldAvg = homeSoldAvg;
     }
 
     public Double getCatCompeteWeight() {
