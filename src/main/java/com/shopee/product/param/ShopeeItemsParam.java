@@ -7,6 +7,7 @@ public class ShopeeItemsParam {
     private String version;
     private Integer total_count;
     private List<ItemsBean> items;
+    private QueryRewriteBean query_rewrite;
 
 
     public String getVersion() {
@@ -33,7 +34,25 @@ public class ShopeeItemsParam {
         this.items = items;
     }
 
+    public QueryRewriteBean getQuery_rewrite() {
+        return query_rewrite;
+    }
 
+    public void setQuery_rewrite(QueryRewriteBean query_rewrite) {
+        this.query_rewrite = query_rewrite;
+    }
+
+    public static class QueryRewriteBean{
+        String ori_keyword;
+
+        public String getOri_keyword() {
+            return ori_keyword;
+        }
+
+        public void setOri_keyword(String ori_keyword) {
+            this.ori_keyword = ori_keyword;
+        }
+    }
 
     public static class ItemsBean {
 

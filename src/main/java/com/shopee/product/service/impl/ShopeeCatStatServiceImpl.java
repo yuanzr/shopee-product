@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.IntSummaryStatistics;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.sun.org.apache.bcel.internal.generic.NEW;
@@ -203,26 +204,28 @@ public class ShopeeCatStatServiceImpl implements ShopeeCatStatService {
         Long version = Long.parseLong(sdf.format(date));
 
         List<ShopeeCat>  allChildCatList = shopeeCatService.getAllChildInParent(parentId,regionNo);
+        Map<String, ShopeeCat> catMap = allChildCatList.stream().collect(Collectors.toMap(ShopeeCat::getDisplayName, a -> a,(k1,k2)->k1));
         List<ShopeeCatStat> catStatList = new ArrayList<>();
 
         for (int i = 0; i < allChildCatList.size(); i++) {
-            ShopeeCat cat = allChildCatList.get(i);
-            List<ShopeeItemsParam.ItemsBean> catTotalItems = new ArrayList<>();
+
+            String jsonText = JsonReadService.getDatafromFile("shopee-items-sales-" + (i+1));
+            ShopeeItemsParam shopeeCatParam = JSONObject.parseObject(jsonText, ShopeeItemsParam.class);
+            ShopeeCat cat = catMap.get(shopeeCatParam.getQuery_rewrite().getOri_keyword());
+
+
             ShopeeCatStat statCat = new ShopeeCatStat();
             statCat.setParentCategoryId(parentId);
             statCat.setCatId(cat.getCatId());
             statCat.setVersion(version);
             statCat.setRegionNo(regionNo);
-            String jsonText = JsonReadService.getDatafromFile("shopee-items-sales-" + (i+1));
-            ShopeeItemsParam shopeeCatParam = JSONObject.parseObject(jsonText, ShopeeItemsParam.class);
             statCat.setTotalProCount(shopeeCatParam.getTotal_count());
             List<ShopeeItemsParam.ItemsBean> items = shopeeCatParam.getItems();
+
             List<ItemsBean> itemsBeans = items.subList(5, 45);
-            catTotalItems.addAll(itemsBeans);
-//            catTotalItems.addAll(items);
 
             //统计当前子类目的销量汇总信息
-            IntSummaryStatistics collect = catTotalItems.stream().collect(Collectors.summarizingInt(value -> value.getSold()));
+            IntSummaryStatistics collect = itemsBeans.stream().collect(Collectors.summarizingInt(value -> value.getSold()));
 
             //计算首页平均销量:销量总和/产品总数量
             Double homeAvgSoldThird = collect.getAverage();
