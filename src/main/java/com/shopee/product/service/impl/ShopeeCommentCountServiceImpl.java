@@ -54,7 +54,7 @@ public class ShopeeCommentCountServiceImpl implements ShopeeCommentCountService 
             comment.setColor(split[0]);
             comment.setSize(split[1]);
             comment.setAmount(mapCount.get(key));
-            comment.setItemId(2);
+            comment.setItemId(3);
             mapper.insert(comment);
         }
     }

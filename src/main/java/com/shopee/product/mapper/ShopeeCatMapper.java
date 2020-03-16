@@ -27,4 +27,5 @@ public interface ShopeeCatMapper {
 
     int updateByPrimaryKeySelective(ShopeeCat record);
 
+    int updateByPrimaryKey(ShopeeCat record);
 }
