@@ -2,6 +2,7 @@ package com.shopee.product;
 
 import com.shopee.product.service.ShopeeCatService;
 import com.shopee.product.service.ShopeeCatStatService;
+import com.shopee.product.service.ShopeeCommentCountService;
 import com.shopee.product.service.ShopeeItemsService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ class ProductApplicationTests {
 
     @Autowired
     private ShopeeCatStatService shopeeCatStatService;
+    @Autowired
+    private ShopeeCommentCountService shopeeCommentCountService;
 
     @Test
     void contextLoads() {
@@ -53,4 +56,9 @@ class ProductApplicationTests {
         shopeeCatStatService.importJsonData(parentId.longValue(),regionNo);
     }
 
+
+    @Test
+    void importItemCommment() {
+        shopeeCommentCountService.insert();
+    }
 }

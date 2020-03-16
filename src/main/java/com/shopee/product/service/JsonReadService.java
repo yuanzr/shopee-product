@@ -15,7 +15,7 @@ import java.io.InputStreamReader;
 public class JsonReadService {
 
 
-    public ShopeeCatParam getJsonObj(String fileName){
+    public ShopeeCatParam getJsonObj(String fileName) {
         String jsonText = getDatafromFile(fileName);
         ShopeeCatParam shopeeCatParam = JSONObject.parseObject(jsonText, ShopeeCatParam.class);
         return shopeeCatParam;
@@ -23,8 +23,6 @@ public class JsonReadService {
 
     /**
      * shopee-category-th
-     * @param fileName
-     * @return
      */
     public static String getDatafromFile(String fileName) {
         URL url = ClassLoader.getSystemResource("json/items/" + fileName + ".json");
@@ -54,10 +52,11 @@ public class JsonReadService {
     }
 
 
-//    <!--产品详情连接-->
+    //    <!--产品详情连接-->
 //    https://shopee.co.th/产品title-i.shopid.itemid
     public static void main(String[] args) {
-        getDatafromFile("shopee-items-sales-1");
+
+
     }
 
 }
