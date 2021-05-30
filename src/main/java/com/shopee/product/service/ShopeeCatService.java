@@ -37,4 +37,11 @@ public interface ShopeeCatService {
      * @return
      */
     List<ShopeeCat> getAllChildInParent(Long parentId, Integer regionNo);
+
+    /**
+     * 获取所有类目词
+     * https://shopee.com.my/api/v2/category_list/get_all
+     *
+     */
+    List<ShopeeCat> getAllCatSimple();
 }

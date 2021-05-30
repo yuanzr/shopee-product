@@ -84,9 +84,49 @@ public class ShopeeCatServiceImpl  implements ShopeeCatService {
         return shopeeCatMapper.selectByExample(example);
     }
 
+    @Override
+    public List<ShopeeCat> getAllCatSimple() {
+        String fileName = "shopee-category-my";
+        ShopeeCatParam param = jsonReadService.getJsonObj(fileName);
+        List<ShopeeCatParam.DataBean> data = param.getData();
+        List<ShopeeCat> firstCatList  = new ArrayList<>();//一级分类
+        for (ShopeeCatParam.DataBean dataBean : data) {
+            //一级类目
+            ShopeeCatParam.DataBean.MainBean main = dataBean.getMain();
+            ShopeeCat firstCat = new ShopeeCat();
+            firstCat.setCatId(main.getCatid());
+            firstCat.setParentCategoryId(main.getParent_category());
+            firstCat.setDisplayName(main.getDisplay_name());
+
+            List<ShopeeCatParam.DataBean.SubBean> subList = dataBean.getSub();
+            List<ShopeeCat> secondCatList = new ArrayList<>();//二级分类
+            for (ShopeeCatParam.DataBean.SubBean secondBean : subList) {
+                //二级类目
+                ShopeeCat secondCat = new ShopeeCat();
+                secondCat.setDisplayName(secondBean.getDisplay_name());
+
+                List<ShopeeCatParam.DataBean.SubBean.SubSubBean> subSubList = secondBean.getSub_sub();
+                List<ShopeeCat> thirdCatList  = new ArrayList<>();//三级分类
+                for (ShopeeCatParam.DataBean.SubBean.SubSubBean thirdBean : subSubList) {
+                    //三级类目
+                    ShopeeCat thirdCat = new ShopeeCat();
+                    if (!StringUtils.isEmpty(thirdBean.getDisplay_name())){
+                        thirdCat.setDisplayName(thirdBean.getDisplay_name());
+                        thirdCatList.add(thirdCat);
+                    }
+                }
+                secondCat.setSubList(thirdCatList);
+                secondCatList.add(secondCat);
+            }
+            firstCat.setSubList(secondCatList);
+            firstCatList.add(firstCat);
+        }
+        return firstCatList;
+    }
+
 
     public List<ShopeeCat> getAllCat(){
-        String fileName = "shopee-category-tw";
+        String fileName = "shopee-category-my";
         ShopeeCatParam param = jsonReadService.getJsonObj(fileName);
         List<ShopeeCatParam.DataBean> data = param.getData();
         String version = param.getVersion();
@@ -181,7 +221,6 @@ public class ShopeeCatServiceImpl  implements ShopeeCatService {
         totalCatList.addAll(thirdCatList);
         return totalCatList;
     }
-
 
 
 

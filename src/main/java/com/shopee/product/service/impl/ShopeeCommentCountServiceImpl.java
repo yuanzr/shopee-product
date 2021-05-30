@@ -49,12 +49,11 @@ public class ShopeeCommentCountServiceImpl implements ShopeeCommentCountService 
         Set<String> keys = mapCount.keySet();
 
         for (String key : keys) {
-            String[] split = key.split(",");
             ShopeeCommentCount comment = new ShopeeCommentCount();
-            comment.setColor(split[0]);
-            comment.setSize(split[1]);
+            comment.setColor(key);
+            comment.setSize("L");
             comment.setAmount(mapCount.get(key));
-            comment.setItemId(3);
+            comment.setItemId(9);
             mapper.insert(comment);
         }
     }
